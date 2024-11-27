@@ -1,0 +1,35 @@
+[33mcommit 5a0785f83089ac3be9189f1835f77d192c54f8db[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;32mdevelopment[m[33m)[m
+Author: Lirovsky <pablolangerprofissional@gmail.com>
+Date:   Tue Nov 26 15:34:38 2024 -0300
+
+    Realizada integração validando tipos com TS
+
+[33mcommit 6312d068a2ce38ad1937358e9ddfa0c3726bb24b[m
+Author: Lirovsky <pablolangerprofissional@gmail.com>
+Date:   Tue Nov 26 09:15:17 2024 -0300
+
+    Criada a base do projeto sem integração
+
+[33mcommit 699611487e10cc29dc221680cb86a095d7c88a87[m
+Author: Lirovsky <pablolangerprofissional@gmail.com>
+Date:   Mon Nov 25 15:25:50 2024 -0300
+
+    Instalado TailwindCss
+
+[33mcommit 2f922a977a8282de94f7d45d567de445fe07b055[m
+Author: Lirovsky <pablolangerprofissional@gmail.com>
+Date:   Mon Nov 25 15:09:45 2024 -0300
+
+    Instalação das dependências
+
+[33mcommit 2e7480927ccfe56d888b0bc3d2415e17d53abc66[m
+Author: Lirovsky <pablolangerprofissional@gmail.com>
+Date:   Mon Nov 25 14:25:06 2024 -0300
+
+    Upando os arquivos iniciais
+
+[33mcommit 53392ab035fa293ac286dd396fbd3f83b3cab792[m[33m ([m[1;31morigin/main[m[33m)[m
+Author: Lirovsky <pablolangerprofissional@gmail.com>
+Date:   Mon Nov 25 14:17:24 2024 -0300
+
+    Criando o projeto

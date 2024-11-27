@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { format } from "date-fns";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { DataTypes } from "./dataTypes";
 
 import { IoSearch, IoLocationOutline, IoEyeOutline } from "react-icons/io5";
@@ -17,54 +17,73 @@ import {
 function App() {
   const [data, setData] = useState<DataTypes | null>(null);
   const [inputValue, setInputValue] = useState<string>("Lajeado");
+  const [error, setError] = useState<string>("");
+
   const API_KEY = "fdd48281bc1e2098081fd54dbbaeba3d";
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(event.target.value.trim());
+  const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(event.target.value);
+  };
+
+  const onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+    }
   };
 
   async function getData() {
+    if (!inputValue) return;
     try {
       const response = await axios.get(
         `https://api.openweathermap.org/data/2.5/weather?q=${inputValue}&appid=${API_KEY}&lang=pt_br&units=metric`,
       );
-      setInputValue("");
       setData(response.data);
-    } catch (error) {
-      throw new Error((error as AxiosError).message);
+      setInputValue("");
+      setError("");
+    } catch (error: unknown) {
+      setError(error.response.status);
     }
   }
 
   useEffect(() => {
     getData();
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <div className="min-h-screen bg-slate-900 px-4 text-white">
-      <header className="py-4 sm:flex sm:items-center sm:justify-between">
-        <div className="flex items-center justify-center gap-x-3 py-8 text-3xl sm:py-0">
+    <div className="min-h-screen bg-slate-900 px-10 text-white">
+      <header className="py-4 sm:flex sm:justify-between">
+        <div className="flex justify-center gap-x-3 py-8 text-3xl sm:py-0">
           <h2 className="flex">Climática</h2>
           <FaCloudMoonRain className="text-blue-400" />
         </div>
-        <div className="flex justify-center gap-x-3">
-          <input
-            type="text"
-            placeholder="Digite a cidade"
-            className="rounded-full border-none bg-slate-800 p-3 text-base text-white focus:outline-none"
-            value={inputValue}
-            onChange={handleChange}
-          />
+        <form className="flex justify-center gap-x-3">
+          <div>
+            <input
+              type="text"
+              placeholder="Digite a cidade"
+              className="rounded-full border-none bg-slate-800 p-3 text-base text-white focus:outline-none"
+              value={inputValue}
+              onChange={onChangeHandler}
+              onKeyDown={onKeyDown}
+            />
+            <div className="flex ps-3">
+              {error ? (
+                <p className="text-rose-500">
+                  {error !== "200" && "Cidade não encontrada"}
+                </p>
+              ) : null}
+            </div>
+          </div>
           <button
             type="button"
             id="searchBtn"
-            className="flex cursor-pointer items-center gap-x-2 rounded-full border-none bg-blue-400 px-4 py-3 text-base text-white"
-            onClick={getData}
+            className="flex h-12 cursor-pointer items-center gap-x-2 rounded-full border-none bg-blue-400 px-4 py-3 text-base text-white"
+            onClick={() => getData()}
           >
             <IoSearch /> Pesquisar
           </button>
-        </div>
+        </form>
       </header>
       {data && (
         <div className="mt-10 justify-center gap-x-4 md:flex">
@@ -89,10 +108,12 @@ function App() {
             <hr />
             <div className="mt-3 text-sm md:pt-5 lg:pt-0">
               <p className="flex items-center gap-x-3 text-lg">
-                <FaRegCalendar /> {format(new Date(), "dd-MMM-yyyy")}
+                <FaRegCalendar className="text-yellow-400" />{" "}
+                {format(new Date(), "dd / MMM / yyyy")}
               </p>
               <p className="flex items-center gap-x-3 text-lg">
-                <IoLocationOutline /> {data.name}, {data.sys.country}
+                <IoLocationOutline className="text-lime-600" /> {data.name},{" "}
+                {data.sys.country}
               </p>
             </div>
           </div>

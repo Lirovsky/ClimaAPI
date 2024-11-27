@@ -17,7 +17,6 @@ import {
 function App() {
   const [data, setData] = useState<DataTypes | null>(null);
   const [inputValue, setInputValue] = useState<string>("Lajeado");
-  const [error, setError] = useState<string>("");
 
   const API_KEY = "fdd48281bc1e2098081fd54dbbaeba3d";
 
@@ -39,9 +38,8 @@ function App() {
       );
       setData(response.data);
       setInputValue("");
-      setError("");
-    } catch (error: unknown) {
-      setError(error.response.status);
+    } catch (error) {
+      console.log((error as Error).message);
     }
   }
 
@@ -58,23 +56,14 @@ function App() {
           <FaCloudMoonRain className="text-blue-400" />
         </div>
         <form className="flex justify-center gap-x-3">
-          <div>
-            <input
-              type="text"
-              placeholder="Digite a cidade"
-              className="rounded-full border-none bg-slate-800 p-3 text-base text-white focus:outline-none"
-              value={inputValue}
-              onChange={onChangeHandler}
-              onKeyDown={onKeyDown}
-            />
-            <div className="flex ps-3">
-              {error ? (
-                <p className="text-rose-500">
-                  {error !== "200" && "Cidade não encontrada"}
-                </p>
-              ) : null}
-            </div>
-          </div>
+          <input
+            type="text"
+            placeholder="Digite a cidade"
+            className="rounded-full border-none bg-slate-800 p-3 text-base text-white focus:outline-none"
+            value={inputValue}
+            onChange={onChangeHandler}
+            onKeyDown={onKeyDown}
+          />
           <button
             type="button"
             id="searchBtn"
